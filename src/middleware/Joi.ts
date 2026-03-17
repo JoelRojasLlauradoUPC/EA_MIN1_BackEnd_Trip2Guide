@@ -59,5 +59,27 @@ export const Schemas = {
             image: Joi.string().optional(),
             authorId: Joi.string().pattern(/^[0-9a-fA-F]{24}$/).optional()
         }).min(1)
+    },
+
+    Point: {
+        create: Joi.object({
+            name: Joi.string().required(),
+            description: Joi.string().optional(),
+            latitude: Joi.number().required(),
+            longitude: Joi.number().required(),
+            image: Joi.string().optional(),
+            routeId: Joi.string().pattern(/^[0-9a-fA-F]{24}$/).required(),
+            index: Joi.number().integer().min(0).required()
+        }),
+
+        update: Joi.object({
+            name: Joi.string().optional(),
+            description: Joi.string().optional(),
+            latitude: Joi.number().optional(),
+            longitude: Joi.number().optional(),
+            image: Joi.string().optional(),
+            routeId: Joi.string().pattern(/^[0-9a-fA-F]{24}$/).optional(),
+            index: Joi.number().integer().min(0).optional()
+        }).min(1)
     }
 };

@@ -5,20 +5,22 @@ const createRoute = async (input: IRoute) => {
     return await route.save();
 };
 
-const getRoute = async (RouteId: string) => {
-    return await RouteModel.findById(RouteId).exec();
+const getRoute = async (routeId: string) => {
+    return await RouteModel.findById(routeId).populate('points').exec();
 };
 
 const getAllRoutes = async () => {
-    return await RouteModel.find().exec();
+    return await RouteModel.find().populate('points').exec();
 };
 
-const updateRoute = async (RouteId: string, input: Partial<IRoute>) => {
-    return await RouteModel.findByIdAndUpdate(RouteId, input, { new: true }).exec();
+const updateRoute = async (routeId: string, input: Partial<IRoute>) => {
+    return await RouteModel.findByIdAndUpdate(routeId, input, { new: true })
+        .populate('points')
+        .exec();
 };
 
-const deleteRoute = async (RouteId: string) => {
-    return await RouteModel.findByIdAndDelete(RouteId).exec();
+const deleteRoute = async (routeId: string) => {
+    return await RouteModel.findByIdAndDelete(routeId).exec();
 };
 
 export default {

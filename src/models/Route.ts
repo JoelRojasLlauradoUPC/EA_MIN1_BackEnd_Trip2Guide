@@ -38,8 +38,20 @@ const RouteSchema: Schema = new Schema(
     },
     {
         timestamps: true,
-        versionKey: false
+        versionKey: false,
+        toJSON: {
+            virtuals: true
+        },
+        toObject: {
+            virtuals: true
+        }
     }
 );
+
+RouteSchema.virtual('points', {
+    ref: 'Point',
+    localField: '_id',
+    foreignField: 'routeId'
+});
 
 export default mongoose.model<IRouteModel>('Route', RouteSchema);
