@@ -7,12 +7,12 @@ const router = express.Router();
 /**
  * @openapi
  * tags:
- *   - name: Users
+ *   - name: users
  *     description: Endpoints CRUD de Users
  *
  * components:
  *   schemas:
- *     User:
+ *     user:
  *       type: object
  *       properties:
  *         _id:
@@ -46,7 +46,7 @@ const router = express.Router();
  *           format: date-time
  *           example: "2026-03-07T15:00:00.000Z"
  *
- *     UserCreate:
+ *     userCreate:
  *       type: object
  *       required:
  *         - name
@@ -71,7 +71,7 @@ const router = express.Router();
  *           type: string
  *           example: "password123"
  *
- *     UserUpdate:
+ *     userUpdate:
  *       type: object
  *       properties:
  *         name:
@@ -96,10 +96,10 @@ const router = express.Router();
 
 /**
  * @openapi
- * /Users:
+ * /users:
  *   post:
  *     summary: Crea un User
- *     tags: [Users]
+ *     tags: [users]
  *     requestBody:
  *       required: true
  *       content:
@@ -116,10 +116,10 @@ router.post('/', ValidateJoi(Schemas.User.create), controller.createUser);
 
 /**
  * @openapi
- * /Users:
+ * /users:
  *   get:
  *     summary: Lista todos los Users
- *     tags: [Users]
+ *     tags: [users]
  *     responses:
  *       200:
  *         description: OK
@@ -128,13 +128,13 @@ router.get('/', controller.readAll);
 
 /**
  * @openapi
- * /Users/{UserId}:
+ * /users/{userId}:
  *   get:
  *     summary: Obtiene un User por ID
  *     tags: [Users]
  *     parameters:
  *       - in: path
- *         name: UserId
+ *         name: userId
  *         required: true
  *         schema:
  *           type: string
@@ -149,13 +149,13 @@ router.get('/:UserId', controller.readUser);
 
 /**
  * @openapi
- * /Users/{UserId}:
+ * /users/{userId}:
  *   put:
  *     summary: Actualiza un User por ID
  *     tags: [Users]
  *     parameters:
  *       - in: path
- *         name: UserId
+ *         name: userId
  *         required: true
  *         schema:
  *           type: string
@@ -178,13 +178,13 @@ router.put('/:UserId', ValidateJoi(Schemas.User.update), controller.updateUser);
 
 /**
  * @openapi
- * /Users/{UserId}:
+ * /users/{userId}:
  *   delete:
  *     summary: Elimina un User por ID
  *     tags: [Users]
  *     parameters:
  *       - in: path
- *         name: UserId
+ *         name: userId
  *         required: true
  *         schema:
  *           type: string

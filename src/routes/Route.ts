@@ -7,7 +7,7 @@ const router = express.Router();
 /**
  * @openapi
  * tags:
- *   - name: Routes
+ *   - name: routes
  *     description: Endpoints CRUD de Routes
  *
  * components:
@@ -59,7 +59,7 @@ const router = express.Router();
  *           format: date-time
  *           example: "2026-03-13T09:30:00.000Z"
  *
- *     RouteCreate:
+ *     routeCreate:
  *       type: object
  *       required:
  *         - title
@@ -105,7 +105,7 @@ const router = express.Router();
  *           type: string
  *           example: "65f1c2a1b2c3d4e5f6789001"
  *
- *     RouteUpdate:
+ *     routeUpdate:
  *       type: object
  *       properties:
  *         title:
@@ -145,10 +145,10 @@ const router = express.Router();
 
 /**
  * @openapi
- * /Routes:
+ * /routes:
  *   post:
  *     summary: Crea una Route
- *     tags: [Routes]
+ *     tags: [routes]
  *     requestBody:
  *       required: true
  *       content:
@@ -165,13 +165,13 @@ router.post('/', ValidateJoi(Schemas.Route.create), controller.createRoute);
 
 /**
  * @openapi
- * /Routes/{RouteId}:
+ * /routes/{routeId}:
  *   get:
  *     summary: Obtiene una Route por ID
- *     tags: [Routes]
+ *     tags: [routes]
  *     parameters:
  *       - in: path
- *         name: RouteId
+ *         name: routeId
  *         required: true
  *         schema:
  *           type: string
@@ -186,10 +186,10 @@ router.get('/:RouteId', controller.readRoute);
 
 /**
  * @openapi
- * /Routes:
+ * /routes:
  *   get:
  *     summary: Lista todas las Routes
- *     tags: [Routes]
+ *     tags: [routes]
  *     responses:
  *       200:
  *         description: OK
@@ -198,13 +198,13 @@ router.get('/', controller.readAll);
 
 /**
  * @openapi
- * /Routes/{RouteId}:
+ * /routes/{routeId}:
  *   put:
  *     summary: Actualiza una Route por ID
- *     tags: [Routes]
+ *     tags: [routes]
  *     parameters:
  *       - in: path
- *         name: RouteId
+ *         name: routeId
  *         required: true
  *         schema:
  *           type: string
@@ -227,13 +227,13 @@ router.put('/:RouteId', ValidateJoi(Schemas.Route.update), controller.updateRout
 
 /**
  * @openapi
- * /Routes/{RouteId}:
+ * /routes/{routeId}:
  *   delete:
  *     summary: Elimina una Route por ID
- *     tags: [Routes]
+ *     tags: [routes]
  *     parameters:
  *       - in: path
- *         name: RouteId
+ *         name: routeId
  *         required: true
  *         schema:
  *           type: string
