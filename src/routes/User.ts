@@ -131,7 +131,7 @@ router.get('/', controller.readAll);
  * /users/{userId}:
  *   get:
  *     summary: Obtiene un User por ID
- *     tags: [Users]
+ *     tags: [users]
  *     parameters:
  *       - in: path
  *         name: userId
@@ -152,7 +152,7 @@ router.get('/:UserId', controller.readUser);
  * /users/{userId}:
  *   put:
  *     summary: Actualiza un User por ID
- *     tags: [Users]
+ *     tags: [users]
  *     parameters:
  *       - in: path
  *         name: userId
@@ -181,7 +181,7 @@ router.put('/:UserId', ValidateJoi(Schemas.User.update), controller.updateUser);
  * /users/{userId}:
  *   delete:
  *     summary: Elimina un User por ID
- *     tags: [Users]
+ *     tags: [users]
  *     parameters:
  *       - in: path
  *         name: userId
