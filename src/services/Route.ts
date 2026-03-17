@@ -1,4 +1,5 @@
 import RouteModel, { IRoute } from '../models/Route';
+import PointModel from '../models/Point';
 
 const createRoute = async (input: IRoute) => {
     const route = new RouteModel(input);
@@ -20,6 +21,7 @@ const updateRoute = async (routeId: string, input: Partial<IRoute>) => {
 };
 
 const deleteRoute = async (routeId: string) => {
+    await PointModel.deleteMany({ routeId }).exec();
     return await RouteModel.findByIdAndDelete(routeId).exec();
 };
 
