@@ -1,6 +1,18 @@
 import { NextFunction, Request, Response } from 'express';
 import RouteService from '../services/Route';
 
+const ALLOWED_LIMITS = new Set([10, 25, 50]);
+
+const parsePagination = (query: Request['query']) => {
+    const parsedLimit = Number(query.limit ?? 10);
+    const parsedPage = Number(query.page ?? 1);
+
+    const limit = ALLOWED_LIMITS.has(parsedLimit) ? (parsedLimit as 10 | 25 | 50) : 10;
+    const page = Number.isInteger(parsedPage) && parsedPage > 0 ? parsedPage : 1;
+
+    return { limit, page };
+};
+
 const createRoute = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const savedRoute = await RouteService.createRoute(req.body);
@@ -25,7 +37,8 @@ const readRoute = async (req: Request, res: Response, next: NextFunction) => {
 
 const readAll = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const routes = await RouteService.getAllRoutes();
+        const { limit, page } = parsePagination(req.query);
+        const routes = await RouteService.getAllRoutes({ limit, page });
         return res.status(200).json(routes);
     } catch (error) {
         return res.status(500).json({ error });

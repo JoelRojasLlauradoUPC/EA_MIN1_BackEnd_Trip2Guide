@@ -3,6 +3,23 @@ import User, { IUserModel, IUser } from '../models/User';
 import RouteModel from '../models/Route';
 import PointModel from '../models/Point';
 
+type PaginationLimit = 10 | 25 | 50;
+
+type PaginationParams = {
+    limit: PaginationLimit;
+    page: number;
+};
+
+type PaginatedResult<T> = {
+    data: T[];
+    pagination: {
+        page: number;
+        limit: number;
+        total: number;
+        totalPages: number;
+    };
+};
+
 const createUser = async (data: Partial<IUser>): Promise<IUserModel> => {
     const user = new User({
         _id: new mongoose.Types.ObjectId(),
@@ -15,8 +32,23 @@ const getUser = async (userId: string): Promise<IUserModel | null> => {
     return await User.findById(userId).populate('routes');
 };
 
-const getAllUsers = async (): Promise<IUserModel[]> => {
-    return await User.find().populate('routes');
+const getAllUsers = async ({ limit, page }: PaginationParams): Promise<PaginatedResult<IUserModel>> => {
+    const skip = (page - 1) * limit;
+
+    const [data, total] = await Promise.all([
+        User.find().skip(skip).limit(limit).populate('routes'),
+        User.countDocuments()
+    ]);
+
+    return {
+        data,
+        pagination: {
+            page,
+            limit,
+            total,
+            totalPages: Math.ceil(total / limit)
+        }
+    };
 };
 
 const updateUser = async (userId: string, data: Partial<IUser>): Promise<IUserModel | null> => {
