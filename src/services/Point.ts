@@ -1,4 +1,15 @@
 import PointModel, { IPoint } from '../models/Point';
+import { PaginationParams } from '../library/Pagination';
+
+type PaginatedResult<T> = {
+    data: T[];
+    pagination: {
+        page: number;
+        limit: number;
+        total: number;
+        totalPages: number;
+    };
+};
 
 const createPoint = async (input: IPoint) => {
     const point = new PointModel(input);
@@ -9,8 +20,23 @@ const getPoint = async (pointId: string) => {
     return await PointModel.findById(pointId).exec();
 };
 
-const getAllPoints = async () => {
-    return await PointModel.find().sort({ index: 1 }).exec();
+const getAllPoints = async ({ limit, page }: PaginationParams): Promise<PaginatedResult<IPoint>> => {
+    const skip = (page - 1) * limit;
+
+    const [data, total] = await Promise.all([
+        PointModel.find().sort({ index: 1 }).skip(skip).limit(limit).exec(),
+        PointModel.countDocuments()
+    ]);
+
+    return {
+        data,
+        pagination: {
+            page,
+            limit,
+            total,
+            totalPages: Math.ceil(total / limit)
+        }
+    };
 };
 
 const getPointsByRoute = async (routeId: string) => {

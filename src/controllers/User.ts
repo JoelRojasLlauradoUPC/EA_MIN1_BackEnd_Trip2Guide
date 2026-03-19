@@ -1,17 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import UserService from '../services/User';
-
-const ALLOWED_LIMITS = new Set([10, 25, 50]);
-
-const parsePagination = (query: Request['query']) => {
-    const parsedLimit = Number(query.limit ?? 10);
-    const parsedPage = Number(query.page ?? 1);
-
-    const limit = ALLOWED_LIMITS.has(parsedLimit) ? (parsedLimit as 10 | 25 | 50) : 10;
-    const page = Number.isInteger(parsedPage) && parsedPage > 0 ? parsedPage : 1;
-
-    return { limit, page };
-};
+import { parsePagination } from '../library/Pagination';
 
 const createUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
