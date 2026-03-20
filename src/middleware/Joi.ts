@@ -43,7 +43,9 @@ export const Schemas = {
             duration: Joi.number().required(),
             difficulty: Joi.string().valid('easy', 'medium', 'hard').required(),
             tags: Joi.array().items(Joi.string()).optional(),
-            userId: Joi.string().pattern(/^[0-9a-fA-F]{24}$/).required()
+            userId: Joi.string()
+                .pattern(/^[0-9a-fA-F]{24}$/)
+                .required()
         }),
 
         update: Joi.object({
@@ -55,7 +57,9 @@ export const Schemas = {
             duration: Joi.number().optional(),
             difficulty: Joi.string().valid('easy', 'medium', 'hard').optional(),
             tags: Joi.array().items(Joi.string()).optional(),
-            userId: Joi.string().pattern(/^[0-9a-fA-F]{24}$/).optional()
+            userId: Joi.string()
+                .pattern(/^[0-9a-fA-F]{24}$/)
+                .optional()
         }).min(1)
     },
 
@@ -65,8 +69,10 @@ export const Schemas = {
             description: Joi.string().optional(),
             latitude: Joi.number().required(),
             longitude: Joi.number().required(),
-            image: Joi.string().optional(),
-            routeId: Joi.string().pattern(/^[0-9a-fA-F]{24}$/).required(),
+            image: Joi.string().allow('').optional(),
+            routeId: Joi.string()
+                .pattern(/^[0-9a-fA-F]{24}$/)
+                .required(),
             index: Joi.number().integer().min(0).required()
         }),
 
@@ -75,8 +81,10 @@ export const Schemas = {
             description: Joi.string().optional(),
             latitude: Joi.number().optional(),
             longitude: Joi.number().optional(),
-            image: Joi.string().optional(),
-            routeId: Joi.string().pattern(/^[0-9a-fA-F]{24}$/).optional(),
+            image: Joi.string().allow('').optional(),
+            routeId: Joi.string()
+                .pattern(/^[0-9a-fA-F]{24}$/)
+                .optional(),
             index: Joi.number().integer().min(0).optional()
         }).min(1)
     }
