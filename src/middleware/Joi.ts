@@ -89,12 +89,5 @@ export const Schemas = {
                 .optional(),
             index: Joi.number().integer().min(0).optional()
         }).min(1)
-    },
-
-    Auth: {
-        login: Joi.object({
-            email: Joi.string().email().required(),
-            password: Joi.string().required()
-        })
     }
 };
