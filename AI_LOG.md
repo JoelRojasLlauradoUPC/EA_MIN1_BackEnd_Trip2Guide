@@ -64,3 +64,20 @@ LLISTAT D'USOS:
                 "Revisa els nous models (History i Change) i crea els services seguint les convencions adoptades en els controladors de User, Route i Point."
 - Incoherències detectades: Calia reforçar la coherència referencial entre Change i History i validar IDs/objectes per evitar registres empty.
 - Solució/adaptació manual: S’ha ajustat la lògica de servei per sincronitzar history.changes en create/update/delete i s’ha afegit validació manual de dades d’entrada abans de persistir.
+
+ÚS 7:
+- Eina: GithubCopilot
+- Pregunta/objectiu: Creació automàtica dels Changes
+- Prompt literal:
+                "Revisa els nous models (History i Change) així com també els serveis disponibles per users, routes i points. Afegeix la lògica de servei i validació necessaria per tal que, en cas que el camp hagi canviat, es crei un nou CHANGE"
+- Incoherències detectades: Es detecta risc de sobre-registre (es generaven CHANGE també quan no hi havia canvi real) i inconsistencia en la comparació de valors complexos (ObjectId, dates o arrays).
+- Solució/adaptació manual: S’ha aplicat validació prèvia de diferències reals camp a camp i normalització de valors abans de comparar, registrant només canvis efectius i mantenint coherència amb el model HISTORY.
+
+REVISIÓ FINAL DE CODI AMB IA:
+ÚS R1:
+- Eina: GithubCopilot
+- Pregunta/objectiu: Revisar el codi en busca de millores o simplificacions que poden haver estat omeses
+- Prompt literal:
+                "Arxiu Prompt Revisió"
+- Millores proposades (més rellevant i considerada crítica per la IA): Falta de consistència, si es fa servir enum per verificar tipus de HISTORY i MODELS, és necessari fer-lo servir també quan s'indica el camp modificat.
+- Solució/adaptació manual: No s'ha cregut convenient aplicar aquesta modificació atès que, quan s escali el projecte s hauria de modificar l'enum per tal q el history continues funcionant.
